@@ -8,5 +8,12 @@ export default {
   A_KEY: 65,
   D_KEY: 68,
   SPACE_KEY: 32,
+  M_KEY: 77,
   UNIT: 15,
+  UP: 'UP',
+  DOWN: 'DOWN',
+  LEFT: 'LEFT',
+  RIGHT: 'RIGHT',
+  BOARD_WIDTH: 60,
+  BOARD_HEIGHT: 40,
 };

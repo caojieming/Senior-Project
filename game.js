@@ -36,7 +36,8 @@ export default class Game {
   // the game's "step," updates the game based on events
   draw() { // the "step," causes the game to move forward
     // "every" returns true if every element in a list passes the given argument
-    if (this.playerList.every(p => !!p.direction)) {
+    //console.log(this.playerList.map(p => !!p.direction));
+    if (this.playerList.every(p => !!p.direction && !p.dead)) {
       this.playerList.forEach(p => {
 
         // draws player on canvas
@@ -52,12 +53,13 @@ export default class Game {
           p.dead = true;
           p.direction = '';
 
+          console.log(this.playerList);
           const winner = this.playerList.filter(q => q.id != p.id)[0];
-          this.ctx.font = '60px Sans Serif';
+          this.ctx.font = '30px Sans Serif';
           this.ctx.fillStyle = '#ffffff';
           this.ctx.textBaseline = 'middle';
           this.ctx.textAlign = 'center';
-          this.ctx.fillText(`Congrats ${winner.name}! Press space to play again!`, this.canvas.width / 2, this.canvas.height / 2);
+          this.ctx.fillText(`Congrats ${winner.name}! Press space to play 1-Player, M to play 2-Player`, this.canvas.width / 2, this.canvas.height / 2);
         }
 
         // sets the player's cell to unsafe
@@ -65,10 +67,7 @@ export default class Game {
 
         // updates the player's position based on key pressed if not dead
         if (!p.dead) {
-          if (p.direction == 'UP') p.y -= 1;
-          if (p.direction == 'DOWN') p.y += 1;
-          if (p.direction == 'LEFT') p.x -= 1;
-          if (p.direction == 'RIGHT') p.x += 1;
+          p.move(this);
         }
       });
     }

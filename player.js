@@ -14,10 +14,8 @@ export default class Player {
     this.dead = false;
     this.keys = keys;
 
-    // sets auto incrementing player id
-    this.constructor.counter = this.constructor.counter || 0;
-    this.id = this.constructor.counter;
-    this.constructor.counter++;
+    // sets id to name; this means names must be unique
+    this.id = name;
   }
 
   // sets given player's direction based on keycode
@@ -45,6 +43,13 @@ export default class Player {
       default:
         break;
     }
+  }
+
+  move(game) {
+    if (this.direction == 'UP') this.y -= 1;
+    if (this.direction == 'DOWN') this.y += 1;
+    if (this.direction == 'LEFT') this.x -= 1;
+    if (this.direction == 'RIGHT') this.x += 1;
   }
 
 };
