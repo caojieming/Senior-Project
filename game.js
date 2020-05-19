@@ -36,7 +36,8 @@ export default class Game {
   // the game's "step," updates the game based on events
   draw() { // the "step," causes the game to move forward
     // "every" returns true if every element in a list passes the given argument
-    //console.log(this.playerList.map(p => !!p.direction));
+    let winner = null;
+    let oneDead = false;
     if (this.playerList.every(p => !!p.direction && !p.dead)) {
       this.playerList.forEach(p => {
 
@@ -48,28 +49,38 @@ export default class Game {
 
         // kills player if they don't move onto a safe cell
         if (!this.safeCells.has(`${p.x}x${p.y}y`) && p.dead == false) {
-          this.gameOver = true;
-
+          
+          console.log(`${p.name} is dead`);
           p.dead = true;
+          oneDead = true;
           p.direction = '';
-
-          console.log(this.playerList);
-          const winner = this.playerList.filter(q => q.id != p.id)[0];
-          this.ctx.font = '30px Sans Serif';
-          this.ctx.fillStyle = '#ffffff';
-          this.ctx.textBaseline = 'middle';
-          this.ctx.textAlign = 'center';
-          this.ctx.fillText(`Congrats ${winner.name}! Press space to play 1-Player, M to play 2-Player`, this.canvas.width / 2, this.canvas.height / 2);
+          winner = this.playerList.filter(q => q.id != p.id)[0];
         }
 
         // sets the player's cell to unsafe
         this.safeCells.delete(`${p.x}x${p.y}y`);
 
         // updates the player's position based on key pressed if not dead
-        if (!p.dead) {
+        //if (!p.dead) {
           p.move(this);
-        }
+        //}
       });
+    }
+    if (this.playerList.every(p => p.dead) || this.playerList[0].x === this.playerList[1].x && this.playerList[0].y === this.playerList[1].y) {
+      this.ctx.font = '30px Sans Serif';
+      this.ctx.fillStyle = '#ffffff';
+      this.ctx.textBaseline = 'middle';
+      this.ctx.textAlign = 'center';
+      this.ctx.fillText(`It's a draw! Press space to play 1-Player, M to play 2-Player`, this.canvas.width / 2, this.canvas.height / 2);
+      this.end();
+    }
+    else if (oneDead) {
+      this.ctx.font = '30px Sans Serif';
+      this.ctx.fillStyle = '#ffffff';
+      this.ctx.textBaseline = 'middle';
+      this.ctx.textAlign = 'center';
+      this.ctx.fillText(`Congrats ${winner.name}! Press space to play 1-Player, M to play 2-Player`, this.canvas.width / 2, this.canvas.height / 2);
+      this.end();
     }
   }
 
@@ -81,8 +92,10 @@ export default class Game {
 
   // stops the game
   end() {
+    this.gameOver = true;
     if (this.interval) {
       clearInterval(this.interval);
+      this.interval = null;
     }
   }
 

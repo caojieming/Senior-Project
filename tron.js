@@ -28,7 +28,7 @@ function handleKeys(event) {
     event.preventDefault();
   }
   if (tron.gameOver && key == SPACE_KEY) {
-    tron.end();
+    tron.end();// technically extra, but harmless
     p1 = new Player('Red', BOARD_WIDTH - 2, BOARD_HEIGHT - 2, '#FF5050', {up: UP_KEY, down: DOWN_KEY, left: LEFT_KEY, right: RIGHT_KEY});
     p2 = new Bot('Blue', 1, 1, '#75A4FF', {up: UP_KEY, down: DOWN_KEY, left: LEFT_KEY, right: RIGHT_KEY});
     playerList = [p1, p2];
