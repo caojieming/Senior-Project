@@ -20,7 +20,7 @@ export default class Game {
   // draws initial game on canvas
   initializeGame() {
     // draws background
-    this.ctx.fillStyle = '#001900';
+    this.ctx.fillStyle = '#424242';
     this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.fill();
 
