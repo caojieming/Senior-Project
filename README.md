@@ -11,3 +11,5 @@ make dev
 ```
 
 Then, copy and paste the link given into a browser.
+
+To stop the server, use [ctr + c].
